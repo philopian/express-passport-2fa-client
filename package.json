@@ -13,6 +13,7 @@
     "@picocss/pico": "^1.5.7",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-devtools": "^4.28.0",
+    "jotai": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.8",
