@@ -1,5 +1,5 @@
 {
-  "name": "express-passport-2fa-client",
+  "name": "express-passport-mfa-client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
