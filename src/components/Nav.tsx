@@ -7,6 +7,7 @@ type NavCss = {
 
 const navLinks = [
   { name: 'Home', route: '/' },
+  { name: 'Register', route: '/register' },
   { name: 'Login', route: '/login' },
   { name: 'QR', route: '/qr' },
   { name: 'Welcome', route: '/welcome' },

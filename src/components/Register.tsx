@@ -1,11 +1,8 @@
-// import { useQuery, useMutation } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-// import { useLogin, useOpenData } from '../hooks/use-auth'
-// import config from '../config'
 import store from '../store'
 import { postRequest } from '../util/request'
 
@@ -16,15 +13,10 @@ type Inputs = {
 
 // ===========================================
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate()
   const [, setMfaToken] = useAtom(store.mfaToken)
 
-  // const { mutate: loginUser }: any = useLogin()
-  // const { isLoading, error, data } = useOpenData()
-  // console.log(data)
-
-  // const [, setMfaToken] = useAtom(store.mfaToken)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const {
     register,
@@ -38,7 +30,7 @@ export default function Login() {
       setIsSubmitting(true)
 
       // Get MFA token
-      const { mfaToken } = await postRequest({ route: '/auth/login', dto })
+      const { mfaToken } = await postRequest({ route: '/auth/register', dto })
       setMfaToken(mfaToken)
 
       // Cleanup
@@ -49,32 +41,12 @@ export default function Login() {
       console.log({
         message: 'login failed',
       })
-      navigate('/')
+      navigate('/register')
     }
   }
 
-  // const { isLoading, error, data } = useQuery({
-  //   queryKey: ['open'],
-  //   queryFn: getRequest,
-  // })
-
-  // const mutation = useMutation(createTodo, {
-  //   mutationKey: ['mfaToken'],
-  //   onSuccess: (data) => {
-  //     setMfaToken(data.mfaToken)
-
-  //     reset()
-  //     setIsSubmitting(false)
-
-  //     navigate('/qr')
-  //   },
-  // })
-
-  // if (isLoading) return 'Loading...'
-  // if (error) return 'An error has occurred: ' + error.message
-
   return (
-    <>
+    <div className="loginContainer">
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">Email address</label>
         <input
@@ -95,9 +67,9 @@ export default function Login() {
         />
 
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Submit'}
+          {isSubmitting ? 'Submitting...' : 'Register'}
         </button>
       </form>
-    </>
+    </div>
   )
 }

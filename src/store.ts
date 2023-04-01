@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 
 const store = {
-  tempToken: atom(''),
+  mfaToken: atom(''),
   accessToken: atom(''),
   refreshToken: atom(''),
 }

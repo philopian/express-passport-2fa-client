@@ -1,13 +1,8 @@
-nav li .active{
-  color:white;
+nav li .active {
+  color: #888888;
 }
 
-
-.loginContainer{
+.loginContainer {
   margin: 20px auto;
   max-width: 500px;
 }
-
-
-
-

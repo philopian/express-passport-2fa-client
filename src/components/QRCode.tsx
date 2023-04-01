@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
-import config from '../config'
 import store from '../store'
+import { imageRequest, postRequest } from '../util/request'
 import './QRCode.css'
 
 type Inputs = {
@@ -12,31 +13,14 @@ type Inputs = {
 }
 
 export function QRCodeImage() {
-  const [tempToken] = useAtom(store.tempToken)
+  const [mfaToken] = useAtom(store.mfaToken)
   const { isLoading, error, data } = useQuery({
     queryKey: ['qr-code'],
-    queryFn: () =>
-      fetch(`${config.baseUrl}/2fa/qrcode`, {
-        method: 'GET',
-        headers: {
-          Accept: 'image/png',
-          Authorization: `Bearer ${tempToken}`,
-        },
-      })
-        .then((response) => response.arrayBuffer())
-        .then((buffer) => {
-          const blob = new Blob([buffer], { type: 'image/png' })
-          const url = URL.createObjectURL(blob)
-          return url
-        })
-        .catch((error) => {
-          console.error(error)
-        }),
+    queryFn: () => imageRequest({ token: mfaToken, route: '/mfa/qrcode' }),
   })
-  console.log('🚀 ~ file: QRCode.tsx:37 ~ QRCodeImage ~ data:', data)
 
-  if (isLoading) return 'Loading...'
-  if (error) return 'An error has occurred: ' + error.message
+  if (isLoading) return <>'Loading...'</>
+  if (error) return <>'An error has occurred: ' + error.message</>
 
   return (
     <>
@@ -47,13 +31,44 @@ export function QRCodeImage() {
 }
 
 export function QRCodeForm() {
+  const navigate = useNavigate()
+  const [mfaToken] = useAtom(store.mfaToken)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [, setAccessToken] = useAtom(store.accessToken)
+  const [, setRefreshToken] = useAtom(store.refreshToken)
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Inputs>()
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<Inputs> = async (dto) => {
+    try {
+      setIsSubmitting(true)
+
+      // Get MFA token
+      const { accessToken, refreshToken } = await postRequest({
+        token: mfaToken,
+        route: '/mfa/verify',
+        dto,
+      })
+
+      // Cleanup
+      reset()
+      setIsSubmitting(false)
+
+      // Set tokens to store
+      setAccessToken(accessToken)
+      setRefreshToken(refreshToken)
+
+      navigate('/welcome')
+    } catch (error) {
+      console.log({
+        message: 'mfa failed',
+      })
+      navigate('/register')
+    }
   }
 
   return (
@@ -68,7 +83,9 @@ export function QRCodeForm() {
           {...register('code')}
         />
 
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting...' : 'Submit'}
+        </button>
       </form>
     </>
   )
@@ -87,6 +104,11 @@ const data = [
 
 export default function QRCode() {
   const [selectedTab, setSelectedTab] = useState<number>(0)
+  const [mfaToken] = useAtom(store.mfaToken)
+  const navigate = useNavigate()
+
+  // No MFA direct to login
+  if (!mfaToken) navigate('/login')
 
   return (
     <>
