@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { useTokenPolling } from '../hooks/token-polling'
 import { mfaTokenStorage, accessTokenStorage, refreshTokenStorage } from '../store'
 import { imageRequest, postRequest } from '../util/request'
 import './QRCode.css'

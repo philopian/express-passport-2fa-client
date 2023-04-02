@@ -1,8 +1,11 @@
 import { useAtom } from 'jotai'
+import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { useLogout } from '../hooks/logout'
+import { useTokenPolling } from '../hooks/token-polling'
 import { accessTokenStorage } from '../store'
+import { now } from '../util/time'
 
 type NavCss = {
   isActive: boolean
@@ -14,9 +17,21 @@ const navLoginLinks = [
   { name: 'QR', route: '/qr' },
 ]
 const navLinks = [{ name: 'Welcome', route: '/welcome' }]
+
 export default function Nav() {
+  const { startTokenPolling, stopTokenPolling } = useTokenPolling()
   const [accessToken] = useAtom(accessTokenStorage)
   const isLoggedIn = !!accessToken
+
+  useEffect(() => {
+    if (accessToken) {
+      console.log('🚀🚀🚀 ~ Polling ON!', now())
+      startTokenPolling()
+    } else {
+      console.log('🛑🛑🛑 ~ Polling OFF!')
+      stopTokenPolling()
+    }
+  }, [accessToken])
 
   // TODO: start/stop timmer
   // { isRunning, startTimer, stopTimer }
