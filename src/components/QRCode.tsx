@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import store from '../store'
+import { useTokenPolling } from '../hooks/token-polling'
+import { mfaTokenStorage, accessTokenStorage, refreshTokenStorage } from '../store'
 import { imageRequest, postRequest } from '../util/request'
 import './QRCode.css'
 
@@ -13,7 +14,7 @@ type Inputs = {
 }
 
 export function QRCodeImage() {
-  const [mfaToken] = useAtom(store.mfaToken)
+  const [mfaToken] = useAtom(mfaTokenStorage)
   const { isLoading, error, data } = useQuery({
     queryKey: ['qr-code'],
     queryFn: () => imageRequest({ token: mfaToken, route: '/mfa/qrcode' }),
@@ -32,10 +33,13 @@ export function QRCodeImage() {
 
 export function QRCodeForm() {
   const navigate = useNavigate()
-  const [mfaToken] = useAtom(store.mfaToken)
+  const [mfaToken] = useAtom(mfaTokenStorage)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [, setAccessToken] = useAtom(store.accessToken)
-  const [, setRefreshToken] = useAtom(store.refreshToken)
+  const [, setAccessToken] = useAtom(accessTokenStorage)
+  const [, setRefreshToken] = useAtom(refreshTokenStorage)
+
+  // TODO: start polling
+  // const { isTokenPollingRunning, startTokenPolling, stopTokenPolling } = useTokenPolling()
 
   const {
     register,
@@ -64,9 +68,7 @@ export function QRCodeForm() {
 
       navigate('/welcome')
     } catch (error) {
-      console.log({
-        message: 'mfa failed',
-      })
+      console.error({ code: 401, message: 'Unauthorized: failed MFA' })
       navigate('/register')
     }
   }
@@ -104,7 +106,7 @@ const data = [
 
 export default function QRCode() {
   const [selectedTab, setSelectedTab] = useState<number>(0)
-  const [mfaToken] = useAtom(store.mfaToken)
+  const [mfaToken] = useAtom(mfaTokenStorage)
   const navigate = useNavigate()
 
   // No MFA direct to login

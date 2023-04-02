@@ -10,6 +10,7 @@
   min-height:200px;
   color:#fff;
 }
+
 /* Hide all but first tab */
 .tabContainer .tabContent > div:not(:first-child) {
   display: none;

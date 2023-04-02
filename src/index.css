@@ -1,3 +1,12 @@
+body {
+  padding: 0 20px;
+}
+
+code {
+  width: 100%;
+  display:flex;
+}
+
 nav li .active {
   color: #888888;
 }
@@ -5,4 +14,9 @@ nav li .active {
 .loginContainer {
   margin: 20px auto;
   max-width: 500px;
+}
+
+.navLogout{
+  cursor:pointer;
+  
 }

@@ -1,6 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom'
 
 import Nav from './components/Nav'
+import Protected from './components/Protected'
 import QRCode from './components/QRCode'
 import Register from './components/Register'
 import Auth from './pages/Auth'
@@ -39,7 +40,11 @@ const routes = createBrowserRouter([
       },
       {
         path: '/welcome',
-        element: <Welcome />,
+        element: (
+          <Protected>
+            <Welcome />
+          </Protected>
+        ),
       },
     ],
   },

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import store from '../store'
+import { mfaTokenStorage } from '../store'
 import { postRequest } from '../util/request'
 
 type Inputs = {
@@ -15,7 +15,7 @@ type Inputs = {
 
 export default function Register() {
   const navigate = useNavigate()
-  const [, setMfaToken] = useAtom(store.mfaToken)
+  const [, setMfaToken] = useAtom(mfaTokenStorage)
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const {
