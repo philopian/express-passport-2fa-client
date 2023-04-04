@@ -2,6 +2,7 @@ import { useAtom } from 'jotai'
 import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { mfaTokenStorage } from '../store'
 import { postRequest } from '../util/request'
@@ -38,9 +39,12 @@ export default function Login() {
       navigate('/qr')
     } catch (error) {
       console.error({ code: 401, message: 'Unauthorized: failed login' })
-      navigate('/')
+      setIsSubmitting(false)
+      toast('🦄 hmmmm wrong `email address` or `password`!')
     }
   }
+
+  // if (errors) console.log(errors)
 
   return (
     <>
