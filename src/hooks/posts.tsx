@@ -21,6 +21,7 @@ export function useAddPost() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          // TODO: add accessToken
         },
         body: JSON.stringify(newPost),
       })

@@ -1,0 +1,13 @@
+# todo
+- [x] Add linting
+- [x] add pico-css
+- [x] add navbar
+- [x] add jotai + session storage for tokens
+- [x] add MFA UI
+- [x] react-query
+- [x] react-hook-form
+- [x] Protect routes
+- [x] Enable polling
+- [x] Add Toasts
+- [ ] Add Dashboard grid
+- [ ] CRUD posts

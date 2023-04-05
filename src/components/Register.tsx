@@ -66,7 +66,7 @@ export default function Register() {
           {...register('password')}
         />
 
-        <button type="submit" disabled={isSubmitting}>
+        <button className="secondary" type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Submitting...' : 'Register'}
         </button>
       </form>

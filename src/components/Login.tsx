@@ -68,7 +68,7 @@ export default function Login() {
         />
 
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Submit'}
+          {isSubmitting ? 'Submitting...' : 'Login'}
         </button>
       </form>
     </>
