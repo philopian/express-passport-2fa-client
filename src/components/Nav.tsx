@@ -25,16 +25,14 @@ export default function Nav() {
 
   useEffect(() => {
     if (accessToken) {
-      console.log('🚀🚀🚀 ~ Polling ON!', now())
+      console.log('🚀 ~ Refresh Auth Polling ON!', now())
       startTokenPolling()
     } else {
-      console.log('🛑🛑🛑 ~ Polling OFF!')
+      console.log('🛑 ~ Refresh Auth Polling OFF!')
       stopTokenPolling()
     }
   }, [accessToken])
 
-  // TODO: start/stop timmer
-  // { isRunning, startTimer, stopTimer }
   const navCss = ({ isActive, isPending }: NavCss) =>
     isPending ? 'pending' : isActive ? 'active' : ''
 

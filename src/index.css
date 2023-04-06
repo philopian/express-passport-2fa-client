@@ -20,3 +20,46 @@ nav li .active {
   cursor:pointer;
   
 }
+
+
+
+
+
+
+
+
+
+
+
+/* WELCOME PAGE */
+.welcomePage .containerPosts {
+  max-width: 400px;
+  margin: 0 auto; 
+  padding-bottom: 200px;
+}
+
+
+
+.welcomePage .containerPosts .item {
+  margin: 10px;
+}
+
+.welcomePage h3{
+  max-width: 400px;
+  margin: 0 auto; 
+}
+
+.welcomePage .containerPosts ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.welcomePage .containerPosts li {
+  position: relative;
+  padding: 16px;
+  border-bottom: 1px solid #eaeaea;
+  list-style: none;
+}
+
+
