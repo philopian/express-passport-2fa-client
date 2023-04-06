@@ -1,23 +1,22 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
 
+import config from '../config'
 import { queryClient } from '../main'
 
-const BASE_URL = 'http://localhost:4004'
-
 export function useFetchPosts() {
-  const { isLoading, error, data } = useQuery({
+  const response = useQuery({
     queryKey: ['posts'],
-    queryFn: () => fetch(`${BASE_URL}/posts`).then((res) => res.json()),
+    queryFn: () => fetch(`${config.baseRestUrl}/posts`).then((res) => res.json()),
   })
 
-  return { isLoading, error, data }
+  return response
 }
 
 export function useAddPost() {
   return useMutation({
     mutationKey: ['posts'],
     mutationFn: async (newPost) => {
-      const response = await fetch(`${BASE_URL}/posts`, {
+      const response = await fetch(`${config.baseRestUrl}/posts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

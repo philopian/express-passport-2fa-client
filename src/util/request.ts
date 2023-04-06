@@ -13,7 +13,7 @@ function withToken(token = '') {
 
 export async function getRequest({ token, route }: Request) {
   const headers: any = { ...withToken(token) }
-  const response = await fetch(`${config.baseUrl}${route}`, {
+  const response = await fetch(`${config.baseRestUrl}${route}`, {
     method: 'GET',
     headers,
   })
@@ -28,7 +28,7 @@ export async function postRequest({ token, route, dto }: Request) {
     'Content-Type': 'application/json',
     ...withToken(token),
   }
-  const response = await fetch(`${config.baseUrl}${route}`, {
+  const response = await fetch(`${config.baseRestUrl}${route}`, {
     method: 'POST',
     headers,
     body: JSON.stringify(dto),
@@ -42,7 +42,7 @@ export async function putRequest({ token, route, dto }: Request) {
     'Content-Type': 'application/json',
     ...withToken(token),
   }
-  const response = await fetch(`${config.baseUrl}${route}`, {
+  const response = await fetch(`${config.baseRestUrl}${route}`, {
     method: 'PUT',
     headers,
     body: JSON.stringify(dto),
@@ -56,7 +56,7 @@ export async function patchRequest({ token, route, dto }: Request) {
     'Content-Type': 'application/json',
     ...withToken(token),
   }
-  const response = await fetch(`${config.baseUrl}${route}`, {
+  const response = await fetch(`${config.baseRestUrl}${route}`, {
     method: 'PATCH',
     headers,
     body: JSON.stringify(dto),
@@ -70,7 +70,7 @@ export async function deleteRequest({ token, route }: Request) {
     'Content-Type': 'application/json',
     ...withToken(token),
   }
-  const response = await fetch(`${config.baseUrl}${route}`, {
+  const response = await fetch(`${config.baseRestUrl}${route}`, {
     method: 'DELETE',
     headers,
   })
@@ -85,7 +85,7 @@ export async function imageRequest({ token, route }: Request) {
       ...withToken(token),
     }
 
-    const response = await fetch(`${config.baseUrl}${route}`, {
+    const response = await fetch(`${config.baseRestUrl}${route}`, {
       method: 'GET',
       headers,
     })

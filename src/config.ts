@@ -1,5 +1,5 @@
 const config = {
-  baseUrl: 'http://localhost:3003',
+  baseRestUrl: 'http://localhost:3003',
   toast: {
     position: 'bottom-center',
     autoClose: 5000,

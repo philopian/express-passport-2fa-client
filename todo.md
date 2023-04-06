@@ -9,5 +9,7 @@
 - [x] Protect routes
 - [x] Enable polling
 - [x] Add Toasts
+- [x] Post comments to the REST server instead of local json-server
+- [ ] Post comments show contain JWT
 - [ ] Add Dashboard grid
 - [ ] CRUD posts
